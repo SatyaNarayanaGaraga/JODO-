@@ -16,13 +16,16 @@
     .hero-image img:hover { transform: scale(1.1); }
     .sticky-nav { position: sticky; top: 0; z-index: 1000; background: #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
     .sticky-nav a.active { color: #00c853; border-bottom: 2px solid #00c853; }
-    .card, .solution-card, .impact-card, .join-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .card:hover, .solution-card:hover, .impact-card:hover, .join-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+    .card, .solution-card, .impact-card, .join-card, .calc-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover, .solution-card:hover, .impact-card:hover, .join-card:hover, .calc-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
     .step-number { background: #ff6f00; color: #fff; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; flex-shrink: 0; }
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 2000; }
     .modal-content { background: #fff; padding: 16px; border-radius: 10px; max-width: 90%; width: 100%; max-width: 400px; text-align: center; }
     .modal-content button { background: #00c853; color: #fff; padding: 10px 20px; border-radius: 5px; border: none; cursor: pointer; font-size: 1rem; }
     .modal-content button:hover { background: #009624; }
+    /* Calculator Styles */
+    .calculator { background: linear-gradient(135deg, #e6ffe6, #fff); border: 2px solid #00c853; }
+    .calc-result { background: #e8f5e8; border-left: 4px solid #00c853; }
     /* Mobile-specific adjustments */
     @media (max-width: 640px) {
       .hero { min-height: auto; padding: 2rem 1rem; flex-direction: column; }
@@ -38,6 +41,7 @@
       .step-content h3 { font-size: 1.1rem; }
       .step-content p { font-size: 0.9rem; }
       .btn { padding: 0.75rem 1.5rem; font-size: 0.9rem; }
+      .calc-input { font-size: 1rem; }
     }
   </style>
 </head>
@@ -46,7 +50,7 @@
   <header class="hero flex flex-col items-center justify-center px-4 py-12 text-white sm:flex-row sm:py-16" data-aos="fade-up">
     <div class="hero-content text-center max-w-lg sm:text-left">
       <h1 class="text-3xl font-bold mb-4 sm:text-5xl sm:mb-6">Join the <span class="highlight">JODO</span> Movement</h1>
-      <p class="text-base mb-6 sm:text-xl sm:mb-8">Transform India’s food system & earn by empowering your community</p>
+      <p class="text-base mb-6 sm:text-xl sm:mb-8">Transform India's food system & earn by empowering your community</p>
       <div class="hero-cta flex flex-col gap-3 justify-center sm:flex-row sm:gap-4 sm:justify-start">
         <a href="#join" class="btn bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-full">Join Waitlist</a>
         <a href="https://wa.me/918500742671" class="btn bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-full" target="_blank">Call Our Team</a>
@@ -161,10 +165,28 @@
     </div>
   </section>
 
+  <!-- Calculator Section -->
+  <section id="calculator" class="section py-12 px-4 bg-green-50 text-center sm:py-16" data-aos="fade-up">
+    <h2 class="text-2xl font-bold mb-6 sm:text-4xl sm:mb-8">Calculate Your JODO Savings 💰</h2>
+    <p class="text-base mb-8 sm:text-lg">Enter your monthly vegetable spend to see how much you can save with JODO!</p>
+    <div class="calc-card calculator p-6 rounded-lg shadow-lg max-w-md mx-auto" data-aos="zoom-in">
+      <div class="mb-4">
+        <label for="monthly-spend" class="block text-left text-sm font-semibold mb-2">Monthly Vegetable Spend (₹)</label>
+        <input type="number" id="monthly-spend" placeholder="e.g., 32500" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 calc-input text-base">
+      </div>
+      <button id="calc-submit" class="btn bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-full w-full mb-4">Calculate Savings</button>
+      <div id="calc-result" class="calc-result p-4 rounded-lg hidden">
+        <h3 class="text-xl font-bold text-green-800 mb-2">Your Monthly Savings with JODO</h3>
+        <p class="text-3xl font-bold text-green-600 mb-1" id="savings-amount">₹0</p>
+        <p class="text-sm text-green-700" id="savings-percent">0% savings</p>
+      </div>
+    </div>
+  </section>
+
   <!-- Survey Section -->
   <section id="survey" class="section py-12 px-4 bg-cyan-50 text-center rounded-2xl sm:py-16" data-aos="fade-up">
     <h2 class="text-2xl font-bold mb-6 sm:text-4xl sm:mb-8">Give Your Suggestion 💡</h2>
-    <p class="text-base mb-6 sm:text-lg sm:mb-8">We’d love to hear your feedback! Share your thoughts below.</p>
+    <p class="text-base mb-6 sm:text-lg sm:mb-8">We'd love to hear your feedback! Share your thoughts below.</p>
     <div class="max-w-md mx-auto">
       <div class="mb-4">
         <input type="text" id="name" placeholder="Your Name" class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 text-sm sm:text-base">
@@ -267,6 +289,26 @@
           link.classList.add('active');
         }
       });
+    });
+
+    // Calculator functionality
+    document.getElementById('calc-submit').addEventListener('click', () => {
+      const monthlySpend = parseFloat(document.getElementById('monthly-spend').value);
+      const resultDiv = document.getElementById('calc-result');
+      const savingsAmount = document.getElementById('savings-amount');
+      const savingsPercent = document.getElementById('savings-percent');
+
+      if (isNaN(monthlySpend) || monthlySpend <= 0) {
+        alert('Please enter a valid monthly spend amount.');
+        return;
+      }
+
+      const savings = monthlySpend * 0.31; // 31% savings as per the site
+      const percentage = '31%';
+
+      savingsAmount.textContent = `₹${Math.round(savings)}`;
+      savingsPercent.textContent = `${percentage} savings`;
+      resultDiv.classList.remove('hidden');
     });
 
     // Form submission with modal feedback
